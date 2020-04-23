@@ -46,6 +46,7 @@ export function getAccountType (state) {
   switch (type) {
     case 'Trezor Hardware':
     case 'Ledger Hardware':
+    case 'Lattice Hardware':
       return 'hardware'
     case 'Simple Key Pair':
       return 'imported'
@@ -241,7 +242,8 @@ export function accountsWithSendEtherInfoSelector (state) {
   const { identities } = state.metamask
 
   const accountsWithSendEtherInfo = Object.entries(accounts).map(([key, account]) => {
-    return Object.assign({}, account, identities[key])
+    const id = identities[key] ? identities[key] : { name: 'Inactive Account', address: '' };
+    return Object.assign({}, account, id)
   })
 
   return accountsWithSendEtherInfo
